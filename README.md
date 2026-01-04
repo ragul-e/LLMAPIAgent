@@ -6,6 +6,7 @@
 1. Basic authentication
 2. Response body validation
 3. Status code validation
+4. Bearer Authentication
 
 **HTTPs methods**
 1. Get Request
