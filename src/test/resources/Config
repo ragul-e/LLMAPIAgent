@@ -1,0 +1,15 @@
+set GOOGLE_GENAI_USE_VERTEXAI=FALSE
+set GOOGLE_API_KEY=AIzaSyA0slLXB7XxBLHrnr9Q82tyDMFM6DAttLk
+mvn exec:java -Dexec.mainClass="com.google.adk.web.AdkWebServer" -Dexec.args="--adk.agents.source-dir=src/main/java" -Dexec.classpathScope="compile"
+
+
+
+
+
+
+
+
+	
+	
+	
+	
