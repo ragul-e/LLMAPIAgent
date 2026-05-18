@@ -17,21 +17,65 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>17</maven.compiler.release>
     <!-- Main class for exec-maven-plugin -->
-    <exec.mainClass>agents.ApiTestingAgent</exec.mainClass>
+    <!--<exec.mainClass>agents.ApiTestingAgent</exec.mainClass>-->
   </properties>
   
   
   <dependencies>
+  
+  
+  <!-- Google ADK Java SDK -->
   <dependency>
-     <groupId>com.google.adk</groupId>
-     <artifactId>google-adk</artifactId>
-     <version>0.1.0</version>
+    <groupId>com.google.adk</groupId>
+    <artifactId>google-adk</artifactId>
+    <version>1.2.0</version>
   </dependency>
+
+  <!-- Dotenv for environment variables -->
+ 
+
+  
+  
   <dependency>
      <groupId>com.google.adk</groupId>
      <artifactId>google-adk-dev</artifactId>
-     <version>0.1.0</version>
+     <version>1.2.0</version>
+  </dependency>  
+  
+ 
+
+
+
+
+
+  
+ 
+
+  <!-- Google OAuth client (authorization code exchange) -->
+  
+
+  <!-- Google Auth library (for credentials + refresh token usage) -->
+  
+
+  <!-- Jackson JSON parser (used by Google client) -->
+  <dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.17.0</version>
   </dependency>
+
+  <!-- HTTP transport (used for token exchange) -->
+  <!--<dependency>
+    <groupId>com.google.http-client</groupId>
+    <artifactId>google-http-client-javanet</artifactId>
+    <version>1.43.3</version>
+  </dependency>-->
+  
+  <!-- Source: https://mvnrepository.com/artifact/com.google.http-client/google-http-client -->
+
+
+  
+
   <dependency>
     <groupId>org.hamcrest</groupId>
     <artifactId>hamcrest-all</artifactId>
@@ -114,7 +158,9 @@
   <artifactId>exec-maven-plugin</artifactId>
   <version>3.2.0</version>
   <configuration>
-    <mainClass>com.google.adk.web.AdkWebServer</mainClass>
+   <mainClass>com.google.adk.web.AdkWebServer</mainClass>
+   <!--<mainClass>agents.AgentCliRunner</mainClass>-->
+
     <classpathScope>compile</classpathScope>
   </configuration>
 </plugin>

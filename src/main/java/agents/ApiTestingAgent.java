@@ -37,27 +37,27 @@ import static org.hamcrest.Matchers.hasToString;
 
 public class ApiTestingAgent {
 
-	private static String USER_ID = "Ragul's Agent";
-	private static String NAME = "Ragul's Api_Test_Agent";
+	private static String USER_ID = "Ragul.Agent";
+	private static String NAME = "Ragul.ApiTestAgent";
 
     // The run your agent with Dev UI, the ROOT_AGENT should be a global public static variable.
     public static BaseAgent ROOT_AGENT = initAgent();
     
     static Response response;
 
-public static BaseAgent initAgent() {
+private static BaseAgent initAgent() {
 		
 		return LlmAgent.builder()
 				.name(NAME)
-				.model("gemini-2.0-flash")
+				.model("gemini-flash-latest")
 				.description("Agent to answer questions and print the response retrived using the endpoint.")
 				.instruction("You are a helpfull agent who can anser user auestions about the endponts and its response ")
 				.instruction("help user for response validation")
 				.tools(FunctionTool.create(ApiTestingAgent.class, "getRequest"),
 						FunctionTool.create(ApiTestingAgent.class, "basicAuth"),
 						FunctionTool.create(ApiTestingAgent.class, "bearerAuthentication"),
-						FunctionTool.create(ApiTestingAgent.class, "validateBody"),
-						FunctionTool.create(ApiTestingAgent.class, "httpPostRequest")
+						FunctionTool.create(ApiTestingAgent.class, "validateBody")
+//						FunctionTool.create(ApiTestingAgent.class, "httpPostRequest")
 						)
 				.build();
 		

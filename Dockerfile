@@ -1,16 +1,29 @@
-# Use a Maven base image to build the Java application
-FROM maven:3.8-openjdk-17-slim AS builder
+# Stage 1: Build the Java application
+FROM maven:3.9-eclipse-temurin-17 AS builder
 WORKDIR /app
+
+# Copy pom.xml first to leverage Docker layer caching for dependencies
 COPY pom.xml .
+RUN mvn dependency:go-offline -B
 
-#RUN mvn dependency:go-offline -B
+# Copy the actual source code
+COPY src ./src
 
+# Compile and package the application
 RUN mvn clean package -DskipTests
 
-COPY src ./src
-# Use a smaller base image for the final running application
+# Stage 2: Lightweight runtime image
+FROM maven:3.9-eclipse-temurin-17-slim
+WORKDIR /app
 
-EXPOSE 8080
+# Copy the pom, target, and src from the builder stage
+COPY --from=builder /app/pom.xml ./pom.xml
+COPY --from=builder /app/target ./target
+COPY --from=builder /app/src ./src
 
-# The ENTRYPOINT must be a single line. This is the corrected line.
-ENTRYPOINT ["mvn", "exec:java","-Dexec.mainClass=com.google.adk.web.AdkWebServer","-Dexec.classpathScope=compile","-Dexec.args=--server.port=${PORT} --adk.agents.source-dir=src/main/java"]
+# Default port matching the ADK documentation guide
+ENV PORT=8000
+EXPOSE ${PORT}
+
+# Updated ENTRYPOINT to match your working local command configuration
+ENTRYPOINT ["sh", "-c", "mvn exec:java -Dexec.mainClass='com.google.adk.web.AdkWebServer' -Dexec.args='--adk.agents.source-dir=target --server.port=${PORT}'"]
